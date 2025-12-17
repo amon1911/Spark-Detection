@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { MachineMetrics, MachineState, ChartDataPoint } from '../types';
 
 export const useMachineSocket = () => {
-  const API_BASE = '/api';
+  const API_BASE = 'https://anthropocentric-poisonous-darcie.ngrok-free.dev/api';
   const [metrics, setMetrics] = useState<MachineMetrics>({
     machine_utilization: 0.0,
     oee: 85.0,

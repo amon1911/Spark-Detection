@@ -11,7 +11,7 @@ import {
   Download
 } from 'lucide-react';
 
-const API_URL = "/api";
+const API_URL = "https://anthropocentric-poisonous-darcie.ngrok-free.dev/api";
 
 interface DowntimeLog {
   id: number;
