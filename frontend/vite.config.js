@@ -7,8 +7,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: process.env.VITE_API_URL || 'http://localhost:8000',
+        target: 'https://anthropocentric-poisonous-darcie.ngrok-free.dev',
         changeOrigin: true,
+        secure: false,
       }
     }
   }
