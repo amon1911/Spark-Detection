@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  # 1. Database Service (PostgreSQL)
+  db:
+    image: postgres:15
+    container_name: machine_monitor_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password123}
+      POSTGRES_DB: ${POSTGRES_DB:-machine_monitor_db}
+    ports:
+      - "5433:5432"  
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  # 2. PgAdmin Service (แถมให้! เอาไว้ดู Data ใน DB ผ่านเว็บ)
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_ui
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@admin.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-root}
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+
+  app:
+    build: .
+    container_name: spark_detection_app
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-admin}:${POSTGRES_PASSWORD:-password123}@db:5432/${POSTGRES_DB:-machine_monitor_db}
+      - RTSP_URL=${RTSP_URL:-0}
+    volumes:
+      - ./weights:/app/weights:ro
+    depends_on:
+      - db
+
+  frontend:
+    build: ./frontend
+    container_name: spark_detection_frontend
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - app
+
+volumes:
+  pg_data:

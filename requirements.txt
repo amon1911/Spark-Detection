@@ -1,0 +1,12 @@
+fastapi>=0.100.0
+uvicorn[standard]
+sqlalchemy
+psycopg2-binary
+pydantic
+python-dotenv
+opencv-python-headless
+numpy
+httpx
+ultralytics
+openpyxl
+gunicorn==23.0.0

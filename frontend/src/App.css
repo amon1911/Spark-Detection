@@ -1,0 +1,11 @@
+/* ไฟล์นี้ให้ว่างไว้ หรือใส่แค่ Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0e17; 
+}
+::-webkit-scrollbar-thumb {
+  background: #333; 
+  border-radius: 4px;
+}
