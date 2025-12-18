@@ -100,15 +100,6 @@ def vision_loop():
         if cap: cap.release()
         db.close()
 
-def find_free_port(start_port=8001):
-    port = start_port
-    while True:
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            try:
-                s.bind(("0.0.0.0", port))
-                return port
-            except OSError:
-                port += 1
 
 # --- LIFESPAN MANAGER (วิธีใหม่ แทน on_event) ---
 @asynccontextmanager
@@ -154,6 +145,6 @@ def root():
     
 if __name__ == "__main__":
     import uvicorn
-    port = find_free_port()
-    print(f"Server running on http://0.0.0.0:{port}")
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    port = 8000
+    print("Server running on http://0.0.0.0:8000")
+    uvicorn.run(app, host="0.0.0.0", port=8000)
