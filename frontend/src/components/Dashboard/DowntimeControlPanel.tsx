@@ -62,6 +62,8 @@ const DowntimeControlPanel: React.FC = () => {
 
   // Fetch active downtime status
   const fetchActiveDowntime = async () => {
+    console.log('API_BASE:', API_BASE);
+    console.log('Fetching active downtime from:', `${API_BASE}/downtime/active`);
     try {
       const response = await axios.get<ActiveDowntimeResponse>(`${API_BASE}/downtime/active`);
       setActiveDowntime(response.data);
@@ -75,6 +77,7 @@ const DowntimeControlPanel: React.FC = () => {
 
   // Fetch downtime summary for today
   const fetchDowntimeSummary = async () => {
+    console.log('Fetching downtime summary from:', `${API_BASE}/downtime/summary/today`);
     try {
       const response = await axios.get<DowntimeSummary>(`${API_BASE}/downtime/summary/today`);
       setDowntimeSummary(response.data);
@@ -87,6 +90,7 @@ const DowntimeControlPanel: React.FC = () => {
 
   // Fetch top 10 downtimes today
   const fetchTopDowntimes = async () => {
+    console.log('Fetching top downtimes from:', `${API_BASE}/downtime/top-today`);
     try {
       const response = await axios.get<DowntimeLog[]>(`${API_BASE}/downtime/top-today`);
       setTopDowntimes(response.data);
@@ -129,6 +133,7 @@ const DowntimeControlPanel: React.FC = () => {
   }, [activeDowntime]);
 
   const handleStartDowntime = async (reason: string) => {
+    console.log('Starting downtime:', reason, 'to:', `${API_BASE}/downtime/start`);
     if (activeDowntime.is_active) {
       alert('มี downtime ที่กำลังดำเนินการอยู่แล้ว กรุณาหยุดก่อน');
       return;
@@ -159,6 +164,7 @@ const DowntimeControlPanel: React.FC = () => {
   };
 
   const handleStopDowntime = async () => {
+    console.log('Stopping downtime to:', `${API_BASE}/downtime/stop`);
     setLoading(true);
     try {
       await axios.post(`${API_BASE}/downtime/stop`);
