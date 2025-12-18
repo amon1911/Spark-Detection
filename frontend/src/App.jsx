@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 import DowntimeControlPanel from './components/Dashboard/DowntimeControlPanel';
 
 
-const API_URL = "https://anthropocentric-poisonous-darcie.ngrok-free.dev/api";
+const API_URL = '/api';
 const TOTAL_WORK_HOURS = 7.5;
 
 function App() {
