@@ -5,9 +5,7 @@ import {
 } from 'lucide-react';
 import { format } from 'date-fns';
 import DowntimeControlPanel from './components/Dashboard/DowntimeControlPanel';
-
-
-const API_URL = '/api';
+import { API_BASE } from './lib/api';
 const TOTAL_WORK_HOURS = 7.5;
 
 function App() {
@@ -44,10 +42,10 @@ function App() {
 
   const fetchData = async () => {
     try {
-      const resState = await axios.get(`${API_URL}/state`);
+      const resState = await axios.get(`${API_BASE}/state`);
       setStateData(resState.data);
       
-      const resSummary = await axios.get(`${API_URL}/summary/today`);
+      const resSummary = await axios.get(`${API_BASE}/summary/today`);
       setSummaryData(resSummary.data);
       
       setCameraStatus('active');

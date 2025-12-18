@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE } from '../../lib/api';
 import {
   AlertCircle,
   Clock,
@@ -10,8 +11,6 @@ import {
   PlayCircle,
   Download
 } from 'lucide-react';
-
-const API_URL = "https://anthropocentric-poisonous-darcie.ngrok-free.dev/api";
 
 interface DowntimeLog {
   id: number;
@@ -64,7 +63,7 @@ const DowntimeControlPanel: React.FC = () => {
   // Fetch active downtime status
   const fetchActiveDowntime = async () => {
     try {
-      const response = await axios.get<ActiveDowntimeResponse>(`${API_URL}/downtime/active`);
+      const response = await axios.get<ActiveDowntimeResponse>(`${API_BASE}/downtime/active`);
       setActiveDowntime(response.data);
     } catch (error: any) {
       if (error.code !== 'ERR_NETWORK') {
@@ -77,7 +76,7 @@ const DowntimeControlPanel: React.FC = () => {
   // Fetch downtime summary for today
   const fetchDowntimeSummary = async () => {
     try {
-      const response = await axios.get<DowntimeSummary>(`${API_URL}/downtime/summary/today`);
+      const response = await axios.get<DowntimeSummary>(`${API_BASE}/downtime/summary/today`);
       setDowntimeSummary(response.data);
     } catch (error: any) {
       if (error.code !== 'ERR_NETWORK') {
@@ -89,7 +88,7 @@ const DowntimeControlPanel: React.FC = () => {
   // Fetch top 10 downtimes today
   const fetchTopDowntimes = async () => {
     try {
-      const response = await axios.get<DowntimeLog[]>(`${API_URL}/downtime/top-today`);
+      const response = await axios.get<DowntimeLog[]>(`${API_BASE}/downtime/top-today`);
       setTopDowntimes(response.data);
     } catch (error: any) {
       if (error.code !== 'ERR_NETWORK') {
@@ -137,7 +136,7 @@ const DowntimeControlPanel: React.FC = () => {
 
     setLoading(true);
     try {
-      await axios.post(`${API_URL}/downtime/start`, { downtime_reason: reason });
+      await axios.post(`${API_BASE}/downtime/start`, { downtime_reason: reason });
       // Optimistic update for UI
       const now = new Date().toISOString();
       setActiveDowntime({
@@ -162,7 +161,7 @@ const DowntimeControlPanel: React.FC = () => {
   const handleStopDowntime = async () => {
     setLoading(true);
     try {
-      await axios.post(`${API_URL}/downtime/stop`);
+      await axios.post(`${API_BASE}/downtime/stop`);
       // Optimistic update for UI
       setActiveDowntime({ is_active: false, current_downtime: null });
       setCurrentDuration(0);
@@ -175,7 +174,7 @@ const DowntimeControlPanel: React.FC = () => {
 
   const handleExportReport = async () => {
     try {
-      let url = `${API_URL}/downtime/export?report_type=${exportType}&year=${exportDate.year}`;
+      let url = `${API_BASE}/downtime/export?report_type=${exportType}&year=${exportDate.year}`;
       
       if (exportType === 'monthly' || exportType === 'daily') {
         url += `&month=${exportDate.month}`;
